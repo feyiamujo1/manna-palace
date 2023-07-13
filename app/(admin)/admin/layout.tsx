@@ -7,7 +7,7 @@ import SideBar from "~/components/Sidebar";
 
 
 export const metadata = {
-  title: 'Manna Palace Amin DashBoard | Manna Palace Food Ordering Web App',
+  title: 'Manna Palace Admin DashBoard | Manna Palace Food Ordering Web App',
   description: "Welcome to the admin dashboard for the manna palace web app aims to provide a convenient and seamless food ordering experience, allowing the school community and outsiders enjoy their favorite meals from Manna Palace with ease, flexibility, and reliability.",
 }
 
@@ -64,7 +64,7 @@ export default function MainWebsiteLayout({
       </nav>
       <div className="relative flex w-full gap-2 md:gap-4">
         <SideBar isOpen={isOpen} setIsOpen={setIsOpen} />
-        <main className="w-full bg-white px-2 pb-10 pt-[90px] shadow-lg md:ml-[338px] md:px-6 ">
+        <main className="w-full bg-white px-2 pb-10 pt-[90px] shadow-lg md:ml-[318px] md:px-6 ">
           <div className="py-4">{children}</div>
         </main>
       </div>

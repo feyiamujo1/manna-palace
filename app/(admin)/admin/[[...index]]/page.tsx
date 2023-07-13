@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import Homepage from "~/components/HomePage";
 // import { PortableText } from "@portabletext/react";
 // import { getSection } from "~/sanity/sanity-utils";
 
@@ -23,9 +24,8 @@ export default async function AdminDashboard({
 //   }
 
   return (
-    <div className="prose">
-      {/* <PortableText value={section?.content} /> */}
-      {path}
+    <div>
+      <Homepage />
     </div>
   );
 }

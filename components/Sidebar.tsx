@@ -45,8 +45,8 @@ export default function SideBar({
   return (
     <div
       className={cn(
-        "fixed h-screen space-y-4 bg-white px-2 py-10 pt-[100px] shadow-lg transition-all md:w-80 md:px-6 md:opacity-100",
-        isOpen && "w-80 opacity-100",
+        "fixed h-screen space-y-4 bg-white px-2 py-10 pt-[100px] shadow-lg transition-all md:w-[300px] md:px-6 md:opacity-100",
+        isOpen && "w-[300px] opacity-100",
         !isOpen && "w-0 overflow-hidden opacity-0"
       )}
     >
