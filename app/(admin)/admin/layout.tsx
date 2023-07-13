@@ -2,11 +2,8 @@
 
 import { Squash as Hamburger } from "hamburger-react";
 import Image from "next/image";
-import Link from "next/link";
 import { useState } from "react";
-import { usePathname } from "next/navigation";
 import SideBar from "~/components/Sidebar";
-import { cn } from "~/lib/utils";
 
 export const metadata = {
   title: "Dashboard | Upland Rice Maestro",
@@ -20,25 +17,7 @@ export default function AdminWebsiteLayout({
   children: React.ReactNode;
 }) {
   const [isOpen, setIsOpen] = useState(false);
-  const currentRoute = usePathname();
-  const routes = [
-    {
-      name: "Meals",
-      path: "/admin/food-items",
-    },
-    {
-      name: "Swallow",
-      path: "/admin/food-items/swallow",
-    },
-    {
-      name: "Snacks",
-      path: "/admin/food-items/snacks",
-    },
-    {
-      name: "Drinks",
-      path: "/admin/food-items/drinks",
-    },
-  ];
+  
   return (
     <div className=" m-0 flex min-h-screen w-full bg-[#f9fafb] p-0">
       <nav className="absolute top-0 left-0 right-0 w-full bg-transparent-black py-2 shadow-lg">
@@ -85,44 +64,7 @@ export default function AdminWebsiteLayout({
       <div className="relative flex w-full gap-2 md:gap-4">
         <SideBar isOpen={isOpen} setIsOpen={setIsOpen} />
         <main className="w-full bg-white px-2 pb-10 pt-[90px] shadow-lg md:ml-[318px] md:px-6 ">
-          <div className="space-y-5">
-            <div className="flex justify-between items-center">
-              <h2 className="font-bold text-xl">Food Items</h2>
-              <p className=" py-1.5 px-3 rounded-md bg-custom-yellow text-white font-bold ">
-                Total: 30
-              </p>
-            </div>
-            <hr />
-            <div className="flex gap-2 mx-auto w-fit py-2 px-3 text-sm bg-[#000] text-slate-300 rounded-xl border border-custom-yellow">
-              {routes.map((route) => (
-                <Link
-                  href={route.path}
-                  className={cn(
-                    "py-2 px-3 rounded-lg cursor-pointer",
-                    currentRoute === route.path &&
-                      "bg-custom-yellow text-white",
-                    currentRoute !== route.path &&
-                      "bg-[#000] hover:bg-custom-yellow hover:text-white transition"
-                  )}
-                >
-                  {route.name}
-                </Link>
-              ))}
-              {/* <Link
-                href="food-items"
-                className={cn(
-                  "py-2 px-3 rounded-lg cursor-pointer",
-                  currentRoute === "/admin/food-items" &&
-                    "bg-custom-yellow text-white",
-                  currentRoute !== "/admin/food-items" &&
-                    "bg-[#000] hover:bg-custom-yellow hover:text-white transition"
-                )}
-              >
-                Meals
-              </Link> */}
-            </div>
-            <div className="py-4">{children}</div>
-          </div>
+          <div className="py-4">{children}</div>
         </main>
       </div>
     </div>
