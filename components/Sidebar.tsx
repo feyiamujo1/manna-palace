@@ -25,11 +25,11 @@ const routes = [
     icon: <IoFastFood className="text-2xl md:text-lg" />,
     path: "/admin/food-items",
   },
-  {
-    name: "Payment Record",
-    icon: <FaMoneyCheckAlt className="text-2xl md:text-lg" />,
-    path: "/admin/payment-record",
-  },
+  // {
+  //   name: "Payment Record",
+  //   icon: <FaMoneyCheckAlt className="text-2xl md:text-lg" />,
+  //   path: "/admin/payment-record",
+  // },
 ];
 
 export default function SideBar({
@@ -45,7 +45,7 @@ export default function SideBar({
   return (
     <div
       className={cn(
-        "fixed h-screen space-y-4 bg-white px-2 py-10 pt-[100px] shadow-lg transition-all md:w-[300px] md:px-6 md:opacity-100",
+        "fixed z-30 h-screen space-y-4 bg-white px-2 py-10 pt-[100px] shadow-lg transition-all md:w-[270px] xl:w-[300px] md:px-6 md:opacity-100",
         isOpen && "w-[300px] opacity-100",
         !isOpen && "w-0 overflow-hidden opacity-0"
       )}

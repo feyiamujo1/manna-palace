@@ -28,12 +28,12 @@ export default function AdminWebsiteLayout({
       </nav>
       <nav className="fixed inset-x-0 top-0 z-50 w-full bg-white py-2 shadow-md">
         <div className="mx-auto flex w-[96%] justify-between md:w-11/12">
-          <div className="flex items-center md:hidden">
+          <div className="flex z-50 items-center md:hidden">
             <Hamburger
               size={28}
               toggled={isOpen}
               toggle={setIsOpen}
-              color="#2c963f"
+              color="#E47513"
               distance="md"
               duration={0.3}
               rounded
@@ -63,7 +63,7 @@ export default function AdminWebsiteLayout({
       </nav>
       <div className="relative flex w-full gap-2 md:gap-4">
         <SideBar isOpen={isOpen} setIsOpen={setIsOpen} />
-        <main className="w-full bg-white px-2 pb-10 pt-[90px] shadow-lg md:ml-[318px] md:px-6 ">
+        <main className="w-full bg-white px-2 pb-10 pt-[90px] shadow-lg md:ml-[288px] xl:ml-[318px] md:px-6 ">
           <div className="py-4">{children}</div>
         </main>
       </div>
