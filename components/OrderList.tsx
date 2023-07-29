@@ -73,7 +73,7 @@ export default function OrderList() {
               id === arr.length && "pb-0"
             )}
           >
-            <div className="flex gap-3 w-[305px]">
+            <div className="flex gap-3 w-[300px]">
               <Image
                 sizes="30"
                 src={foodItem.image}
@@ -85,8 +85,8 @@ export default function OrderList() {
                 <p className="text-[#999999] text-sm">{foodItem.description}</p>
               </div>
             </div>
-            <div>
-              <p className="font-bold">&#8358; {foodItem.price}</p>
+            <div className="w-16 border">
+              <p className="font-bold">&#8358;&nbsp;{foodItem.price}</p>
               <p className="text-[#999999] text-sm">Qty: {foodItem.qty}</p>
             </div>
           </div>

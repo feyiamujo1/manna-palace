@@ -22,10 +22,11 @@ import Jollof from "~/public/Jollof_Rice_with_Stew.jpg";
 import Fanta from "~/public/stock-photo-zaporizhzhia-ukraine-june-row-of-fanta-bottles-on-a-shelf-in-a-store-2316657969.jpg";
 import Sprite from "~/public/stock-photo-stuttgart-germany-august-sprite-lemonade-soft-drink-in-a-plastic-bottle-on-ice-cubes-2041135454.jpg";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import MenuToggler from "~/components/MenuToggler";
 import AdminFoodCard from "~/components/AdminFoodCard";
 import EditFoodItemDialog from "~/components/EditFoodItemDialog";
+import { FoodItem } from "~/types/FoodItem";
 
 export default function FoodCategoryPage() {
   const FoodList = [
@@ -201,22 +202,34 @@ export default function FoodCategoryPage() {
 
   const [selectedCategory, setSelectedCategory] = useState("Meal");
   const [showDialog, setShowDialog] = useState(false);
-
+  const [selectedItem, setSelectedItem] = useState<FoodItem>({id: null, name:"", description: "", price: "", category: "", image: null});
+  
+  
   return (
     <div className="space-y-5 min-h-screen">
       <div className="flex justify-between items-center">
         <h2 className="font-bold text-xl">Food Items</h2>
-        <p className=" py-1.5 px-3 rounded-md bg-custom-yellow text-white font-bold ">
-          Total: {FoodList?.length}
-        </p>
+        <div>
+          <p className=" py-1.5 px-3 rounded-md bg-custom-yellow text-white font-bold ">
+            Total: {FoodList?.length}
+          </p>
+          <p className=" py-1.5 px-3 rounded-md bg-custom-yellow text-white font-bold ">
+            Add 
+          </p>
+        </div>
       </div>
       <hr />
       <MenuToggler
         selectedCategory={selectedCategory}
         setSelectedCategory={setSelectedCategory}
       />
-      <EditFoodItemDialog showDialog={showDialog} setShowDialog={setShowDialog} />
-      <div className=" grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4"> 
+      <EditFoodItemDialog
+        showDialog={showDialog}
+        setShowDialog={setShowDialog}
+        selectedItem={selectedItem}
+        setSelectedItem={setSelectedItem}
+      />
+      <div className=" grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
         {FoodList.map((foodItem) =>
           foodItem.category === selectedCategory ? (
             <AdminFoodCard
@@ -228,6 +241,7 @@ export default function FoodCategoryPage() {
               category={foodItem.category}
               image={foodItem.image}
               setShowDialog={setShowDialog}
+              setSelectedItem={setSelectedItem}
             />
           ) : null
         )}
