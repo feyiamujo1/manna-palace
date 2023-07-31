@@ -10,9 +10,9 @@ module.exports = {
       colors: {
         "custom-yellow": "#E47513",
         "light-custom-yellow": "#FFA02A",
-        "transparent-black": "rgb(0, 0, 0, 0.7)",
+        "transparent-black": "rgb(0, 0, 0, 0.3)",
         'status-red': '#FF1500',
-        "custom-blue": "#"
+        "custom-blue": "#152a3b"
       },
       backgroundImage: {
         'hero-image': "linear-gradient(rgba(0, 0, 41, 0.5), rgba(2, 19, 10, 0.9)) , url('/gourmet-chicken-biryani-with-steamed-basmati-rice-generated-by-ai.jpg')",

@@ -1,6 +1,7 @@
 import Image, { StaticImageData } from "next/image";
 import { TbEdit } from "react-icons/tb";
 import { cn } from "~/lib/utils";
+import { FoodItem } from "~/types/FoodItem";
 
 type Props = {
   id: number;
@@ -9,22 +10,28 @@ type Props = {
   price: number;
   category: string;
   image: StaticImageData;
-  setShowDialog: Function;
-  setSelectedItem: Function;
+  addToCart: Function;
 };
 
-export default function AdminFoodCard({
+export default function CustomerFoodCard({
   id,
   name,
   description,
   price,
   category,
   image,
-  setShowDialog,
-  setSelectedItem,
+  addToCart,
 }: Props) {
   const handleItemSelection = () => {
-    setSelectedItem({
+    // setSelectedItem({
+    //   id: id,
+    //   name: name,
+    //   description: description,
+    //   price: price,
+    //   category: category,
+    //   image: image,
+    // });
+    addToCart({
       id: id,
       name: name,
       description: description,
@@ -32,14 +39,9 @@ export default function AdminFoodCard({
       category: category,
       image: image,
     });
-    setShowDialog(true);
   };
   return (
-    <div
-      onClick={handleItemSelection}
-      className="group pb-2.5 cursor-pointer relative shadow rounded-md overflow-y-hidden duration-300 hover:-translate-y-3 transition"
-    >
-      <TbEdit className="absolute z-20 text-2xl top-4 right-4 w-10 h-10 p-2 rounded-full bg-white group-hover:bg-custom-yellow group-hover:text-white transition duration-200" />
+    <div className="group pb-2.5 cursor-pointer relative shadow rounded-md overflow-y-hidden duration-300 ">
       <Image
         src={image}
         alt="Food Image"
@@ -55,6 +57,12 @@ export default function AdminFoodCard({
           <p className="text-[#999999] text-sm">{description}</p>
         </div>
         <p className="font-bold text-lg">&#8358; {price}</p>
+        <button
+          onClick={handleItemSelection}
+          className="py-2 w-full border-box text-center bg-custom-yellow hover:bg-light-custom-yellow text-white font-bold rounded-md"
+        >
+          Order Now
+        </button>
       </div>
     </div>
   );

@@ -1,0 +1,171 @@
+"use client";
+
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Loader2 } from "lucide-react";
+import { signIn } from "next-auth/react";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
+
+import { SignupFormSchema } from "~/lib/validation-schema";
+
+import { Button } from "./ui/button";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "./ui/form";
+import { Input } from "./ui/input";
+
+export default function SignupForm() {
+  const [loading, setLoading] = useState(false);
+  const [serverError, setServerError] = useState("");
+  const router = useRouter();
+  const form = useForm<z.infer<typeof SignupFormSchema>>({
+    resolver: zodResolver(SignupFormSchema),
+  });
+
+  const onSubmit = async (value: z.infer<typeof SignupFormSchema>) => {
+    setLoading(true);
+    setServerError("");
+
+    try {
+      const newUser = await (
+        await fetch("/api/sanity/signUp", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(value),
+        })
+      ).json();
+
+      if (newUser?.error) {
+        form.setError("email", {
+          type: "custom",
+          message: newUser.error,
+        });
+        return;
+      }
+
+      const res = await signIn("sanity-login", {
+        redirect: false,
+        email: value.email,
+        password: value.password,
+      });
+
+      if (res?.error) {
+        throw new Error(res.error);
+      }
+
+      router.push("/");
+    } catch (error) {
+      setServerError("Something went wrong. Please try again later.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
+        <FormField
+          control={form.control}
+          name="name"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Full Name</FormLabel>
+              <FormControl>
+                <Input
+                  className="focus:ring-1 focus:ring-custom-yellow"
+                  type="text"
+                  placeholder="Fullname"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="email"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Email</FormLabel>
+              <FormControl>
+                <Input
+                  className="focus:ring-1 focus:ring-custom-yellow"
+                  type="email"
+                  placeholder="email"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="phone"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Phone Number</FormLabel>
+              <FormControl>
+                <Input
+                  className="focus:ring-1 focus:ring-custom-yellow"
+                  type="tel"
+                  placeholder="phone number"
+                  {...field}
+                  // onChange={(e) => {
+                  //   const value = e.target.value;
+                  //   const phone = value.replace(/\D/g, "");
+                  //   field.onChange(phone);
+                  // }}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="password"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Password</FormLabel>
+              <FormControl>
+                <Input
+                  className="focus:ring-1 focus:ring-custom-yellow"
+                  type="password"
+                  placeholder="password"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        {serverError && (
+          <div className="text-sm font-medium text-red-500">{serverError}</div>
+        )}
+        <div className="mt-6">
+          <Button
+            className={
+              "w-full bg-custom-yellow text-lg font-medium text-white hover:bg-light-custom-yellow"
+            }
+            disabled={loading}
+            type="submit"
+          >
+            {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+            Register
+          </Button>
+        </div>
+      </form>
+    </Form>
+  );
+}

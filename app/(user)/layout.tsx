@@ -1,16 +1,20 @@
-export const metadata = {
-  title: 'Manna Palace Food Ordering Web App',
-  description: "Welcome to manna palace web app aims to provide a convenient and seamless food ordering experience, allowing the school community and outsiders enjoy their favorite meals from Manna Palace with ease, flexibility, and reliability.",
-}
+"use client"
 
-export default function MainWebsiteLayout({
+export const metadata = {
+  title: "Menu | Manna Palace Application",
+  description:
+    'This is the unofficial website of the Manna Palace Application. ',
+};
+import { CartProvider } from '~/api/CartContext';
+
+export default function UserWebsiteLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
-    <div>
+    <CartProvider>
         {children}
-    </div>
+    </CartProvider>
   )
 }
