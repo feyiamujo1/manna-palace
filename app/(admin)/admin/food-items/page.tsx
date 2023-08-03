@@ -209,12 +209,12 @@ export default function FoodCategoryPage() {
     <div className="space-y-5 min-h-screen">
       <div className="flex justify-between items-center">
         <h2 className="font-bold text-xl">Food Items</h2>
-        <div>
-          <p className=" py-1.5 px-3 rounded-md bg-custom-yellow text-white font-bold ">
+        <div className="space-y-3">
+          <p className=" py-1.5 px-3 rounded-md bg-custom-yellow text-white font-bold text-center">
             Total: {FoodList?.length}
           </p>
-          <p className=" py-1.5 px-3 rounded-md bg-custom-yellow text-white font-bold ">
-            Add 
+          <p onClick={()=>setShowDialog(true)} className=" py-1.5 px-3 rounded-md bg-custom-yellow text-white font-bold text-center">
+            Add Item
           </p>
         </div>
       </div>

@@ -1,3 +1,5 @@
+"use client"
+
 import Image, { StaticImageData } from "next/image";
 import { TbEdit } from "react-icons/tb";
 import { cn } from "~/lib/utils";

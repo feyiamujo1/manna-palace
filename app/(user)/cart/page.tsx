@@ -5,8 +5,9 @@ import Link from "next/link";
 import { useContext } from "react";
 import { GiShoppingBag } from "react-icons/gi";
 import { CartContext } from "~/api/CartContext";
+import CartItemCard from "~/components/CartItemCard";
 
-export default function CheckOut() {
+export default function Cart() {
     const { cart, addToCart, removeFromCart } = useContext(CartContext);
   return (
     <main className="w-full relative scroll-smooth">
@@ -31,16 +32,15 @@ export default function CheckOut() {
         <div className="w-11/12 mx-auto space-y-6">
             <div className=" space-y-2 mt-20">
                 <h2 className=" font-extrabold text-2xl md:text-3xl text-center">
-                    My Bag
+                    Cart
                 </h2>
                 <p className="text-center">
-                    Ensure to avoid mistakes, please validate your order before placing them.
+                    Edit cart here, ensure to validate your food item information before proceeding to checkout.
                 </p>
             </div>
             <div className="space-x-6">
-                <div>
-
-                </div>
+                
+                <CartItemCard />
                 <div className="p-4 rounded-md ">
 
                 </div>

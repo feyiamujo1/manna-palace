@@ -250,20 +250,18 @@ export default function Menu() {
               setSelectedCategory={setSelectedCategory}
             />
             <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
-              {FoodList.map((foodItem) =>
-                foodItem.category === selectedCategory ? (
-                  <CustomerFoodCard
-                    key={foodItem.id}
-                    id={foodItem.id}
-                    name={foodItem.name}
-                    description={foodItem.description}
-                    price={foodItem.price}
-                    category={foodItem.category}
-                    image={foodItem.image}
-                    addToCart = {addToCart}
-                  />
-                ) : null
-              )}
+              {FoodList.filter(foodItem => foodItem.category === selectedCategory).map(filteredItem => 
+              <CustomerFoodCard
+                key={filteredItem.id}
+                id={filteredItem.id}
+                name={filteredItem.name}
+                description={filteredItem.description}
+                price={filteredItem.price}
+                category={filteredItem.category}
+                image={filteredItem.image}
+                addToCart = {addToCart}
+              />
+                )}
             </div>
           </div>
         </div>

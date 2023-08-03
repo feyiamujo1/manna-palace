@@ -1,3 +1,4 @@
+"use client"
 import Image from "next/image";
 import Link from "next/link";
 import Lottie from "lottie-react";
@@ -12,7 +13,14 @@ export default function Home() {
           <Link href="/">
             <Image src="/logo.png" alt="logo" height={40} width={90} />
           </Link>
-          <div className="flex gap-3 items-center"></div>
+          <div className="flex gap-3 items-center">
+            <p className=" py-2 px-4 w-fit font-medium text-white hover:bg-light-custom-yellow transition-all bg-custom-yellow rounded-md ">
+              <Link href="/login">Login</Link>
+            </p>
+            {/* <p className=" py-2 px-4 w-fit font-medium text-white hover:bg-light-custom-yellow transition-all bg-custom-yellow rounded-md ">
+              <Link href="/menu">Register</Link>
+            </p> */}
+          </div>
         </div>
       </nav>
       <section className=" h-screen w-full bg-top md:bg-center bg-cover bg-no-repeat flex justify-center items-center">
