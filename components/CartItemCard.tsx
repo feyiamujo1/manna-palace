@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import { cn } from "~/lib/utils";
 import Jollof from "~/public/Jollof_Rice_with_Stew.jpg";
@@ -6,91 +8,107 @@ import FriedRice from "~/public/Fried-rice.jpeg";
 import PoundedYam from "~/public/pounded-yam.jpg";
 import Indomie from "~/public/korean-instant-noodles-spicy-instant-noodles.jpg";
 import ChickennChips from "~/public/Chicken-and-Chips.jpeg";
+import { RiDeleteBin6Fill } from "react-icons/ri";
+import { AiFillPlusCircle, AiFillMinusCircle } from "react-icons/ai"
 import Link from "next/link";
+import { OrderedItem } from "~/types/OrderedItem";
 
-export default function CartItemCard(){
-    const LatestOrders = [
-        {
-          name: "Jollof Rice",
-          image: Jollof,
-          description: "Mixed with chicken, plantain and coleslaw.",
-          price: 1000,
-          qty: 2,
-        },
-        {
-          name: "Rice and Beans",
-          image: RicenBeans,
-          description: "Mixed with beef, plantain and coleslaw.",
-          price: 1100,
-          qty: 2,
-        },
-        {
-          name: "Fried Rice",
-          image: FriedRice,
-          description: "Mixed with chicken, plantain and coleslaw.",
-          price: 1200,
-          qty: 2,
-        },
-        {
-          name: "Pounded Yam",
-          image: PoundedYam,
-          description: "With Efo riro, snail and chicken",
-          price: 1200,
-          qty: 2,
-        },
-        {
-          name: "Indomie Noodles",
-          image: Indomie,
-          description: "Mixed with fried egg, chicken and susage.",
-          price: 700,
-          qty: 2,
-        },
-        {
-          name: "Chicken and Chips",
-          image: ChickennChips,
-          description: "Mix of chicken, chips and sauce.",
-          price: 1000,
-          qty: 2,
-        },
-      ];
-    return(
-        <div className="shadow py-4 rounded-md w-[420px] space-y-3">
+export default function CartItemCard({cart, addToCart, removeFromCart}: {cart: Array<OrderedItem>, addToCart: Function, removeFromCart: Function}) {
+    console.log(cart[0])
+  const LatestOrders = [
+    {
+      name: "Jollof Rice",
+      image: Jollof,
+      description: "Mixed with chicken, plantain and coleslaw.",
+      price: 1000,
+      quantity: 2,
+    },
+    {
+      name: "Rice and Beans",
+      image: RicenBeans,
+      description: "Mixed with beef, plantain and coleslaw.",
+      price: 1100,
+      quantity: 2,
+    },
+    {
+      name: "Fried Rice",
+      image: FriedRice,
+      description: "Mixed with chicken, plantain and coleslaw.",
+      price: 1200,
+      quantity: 2,
+    },
+    {
+      name: "Pounded Yam",
+      image: PoundedYam,
+      description: "With Efo riro, snail and chicken",
+      price: 1200,
+      quantity: 2,
+    },
+    {
+      name: "Indomie Noodles",
+      image: Indomie,
+      description: "Mixed with fried egg, chicken and susage.",
+      price: 700,
+      quantity: 2,
+    },
+    {
+      name: "Chicken and Chips",
+      image: ChickennChips,
+      description: "Mix of chicken, chips and sauce.",
+      price: 1000,
+      quantity: 2,
+    },
+  ];
+  return (
+    <div className="shadow py-4 rounded-md w-fit space-y-3">
       <div className="flex px-3 justify-between items-center">
-        <p className="text-lg font-bold">Latest Orders</p>
-        <p className="rounded-md text-white bg-custom-yellow text-base py-2 px-3 cursor-pointer font-semibold">
-          <Link href="admin/customers-order">
-            View All
-          </Link>
-        </p>
+        <p className="text-lg font-bold">Food Items</p>
       </div>
-      <div className="">
-        {LatestOrders.map((foodItem, id, arr) => (
+      <div className="md:w-[410px]">
+        {
+          cart && cart.length !== 0 ? 
+          cart.map((foodItem, id, arr) => (
           <div
             key={id}
             className={cn(
-              "flex justify-between items-start px-3 gap-3 py-3 border-t border-[#e5e7eb] hover:bg-[#e5e7eb] cursor-pointer transition-all duration-150",
+              "flex justify-between items-start p-3 border-t border-[#e5e7eb] transition-all duration-150",
               id === arr.length && "pb-0"
             )}
           >
-            <div className="flex gap-3 w-[300px]">
+            <div className="flex gap-3 w-full md:w-full">
               <Image
-                sizes="30"
-                src={foodItem.image}
-                className="rounded-md object-cover w-20 h-20"
+                sizes="35"
+                src={foodItem.image!}
+                className="rounded-md object-cover w-28"
                 alt=""
               />
               <div>
-                <p className="font-bold">{foodItem.name}</p>
-                <p className="text-[#999999] text-sm">{foodItem.description}</p>
+                <div className="space-y-1">
+                    <p className="font-bold">{foodItem.name}</p>
+                    <p className="font-bold">&#8358;&nbsp;{foodItem.price}</p>
+                    <p className="text-[#999999] text-sm">{foodItem.description}</p>
+                </div>
+                <div className="flex gap-4 mt-4">
+                    <button className="w-fit h-fit text-2xl text-custom-yellow hover:text-light-custom-yellow">
+                        <AiFillPlusCircle className=" " />
+                    </button>
+                    <p className=" font-semibold">{foodItem.quantity}</p>
+                    <button className="w-fit h-fit text-2xl text-custom-yellow hover:text-light-custom-yellow" >
+                        <AiFillMinusCircle />
+                    </button>
+                </div>
               </div>
             </div>
-            <div className="w-16 ">
-              <p className="font-bold">&#8358;&nbsp;{foodItem.price}</p>
-              <p className="text-[#999999] text-sm">Qty: {foodItem.qty}</p>
+            <div className="w-fit space-y-1.5 ">
+              <div className="w-full text-right flex justify-end">
+                <RiDeleteBin6Fill className="text-xl w-fit text-right text-black cursor-pointer text-custom-yellow hover:text-red-600" />
+              </div>
             </div>
           </div>
-        ))}
+        ))
+        : <p className="text-[#999999] p-3 border-t border-[#e5e7eb]">Your cart is empty</p>
+        }
       </div>
     </div>
-    )
+  );
 }

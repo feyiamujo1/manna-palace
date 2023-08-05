@@ -1,7 +1,6 @@
 "use client"
 
-import Image from "next/image";
-import { GiShoppingBag } from "react-icons/gi";
+
 import MenuToggler from "~/components/MenuToggler";
 
 import FoodImage from "~/public/gourmet-chicken-biryani-with-steamed-basmati-rice-generated-by-ai.jpg";
@@ -26,10 +25,9 @@ import Jollof from "~/public/Jollof_Rice_with_Stew.jpg";
 import Fanta from "~/public/stock-photo-zaporizhzhia-ukraine-june-row-of-fanta-bottles-on-a-shelf-in-a-store-2316657969.jpg";
 import Sprite from "~/public/stock-photo-stuttgart-germany-august-sprite-lemonade-soft-drink-in-a-plastic-bottle-on-ice-cubes-2041135454.jpg";
 import { useContext, useState } from "react";
-import { FoodItem } from "~/types/FoodItem";
-import Link from "next/link";
 import CustomerFoodCard from "~/components/CustomerFoodCard";
 import { CartContext } from "~/api/CartContext";
+import NavBar from "~/components/UsersNavbar";
 
 export default function Menu() {
   const FoodList = [
@@ -203,36 +201,12 @@ export default function Menu() {
     },
   ];
   const [selectedCategory, setSelectedCategory] = useState("Meal");
-//   const [selectedItem, setSelectedItem] = useState<FoodItem>({
-//     id: null,
-//     name: "",
-//     description: "",
-//     price: "",
-//     category: "",
-//     image: null,
-//   });
 
-  const { cart, addToCart, removeFromCart } = useContext(CartContext);
+  const { cart, addToCart } = useContext(CartContext);
 
   return (
     <main className="w-full relative scroll-smooth bg-[#faf9f5]">
-      <nav className="absolute top-0 left-0 right-0 w-full py-2 shadow-sm">
-        <div className="w-11/12 mx-auto flex justify-between items-center">
-          <Link href="/">
-            <Image src="/logo.png" alt="logo" height={40} width={90} />
-          </Link>
-          <div className="flex gap-3 items-center relative group cursor-pointer">
-            <Link href="/checkout">
-                <GiShoppingBag className="fill-black text-3xl group-hover:fill-custom-yellow" />
-                {cart.length > 0 && (
-                <p className="absolute text-sm -top-1 -right-2 rounded-full bg-custom-yellow text-white font-semibold flex justify-center items-center h-5 w-5 pb-0.5 border-box ">
-                    {cart.length}
-                </p>
-                )}
-            </Link>
-          </div>
-        </div>
-      </nav>
+      <NavBar cart={cart} />
       <section className="min-h-screen py-10 bg-slate-100" id="menu">
         <div className="w-11/12 mx-auto space-y-6">
           <div className=" space-y-2 mt-20">

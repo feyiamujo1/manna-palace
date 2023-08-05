@@ -14,7 +14,7 @@ export default function UserWebsiteLayout({
 }) {
   return (
     <CartProvider>
-        {children}
+      {children}
     </CartProvider>
   )
 }
