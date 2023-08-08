@@ -202,11 +202,11 @@ export default function Menu() {
   ];
   const [selectedCategory, setSelectedCategory] = useState("Meal");
 
-  const { cart, addToCart } = useContext(CartContext);
+  const { cart, addToCart, getTotalItems } = useContext(CartContext);
 
   return (
     <main className="w-full relative scroll-smooth bg-[#faf9f5]">
-      <NavBar cart={cart} />
+      <NavBar cart={cart} getTotalItems={getTotalItems} />
       <section className="min-h-screen py-10 bg-slate-100" id="menu">
         <div className="w-11/12 mx-auto space-y-6">
           <div className=" space-y-2 mt-20">

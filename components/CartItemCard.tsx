@@ -13,7 +13,7 @@ import { AiFillPlusCircle, AiFillMinusCircle } from "react-icons/ai"
 import Link from "next/link";
 import { OrderedItem } from "~/types/OrderedItem";
 
-export default function CartItemCard({cart, addToCart, removeFromCart}: {cart: Array<OrderedItem>, addToCart: Function, removeFromCart: Function}) {
+export default function CartItemCard({cart, reduceQuantity, removeFromCart, IncreaseItemInCart}: {cart: Array<OrderedItem>, IncreaseItemInCart: Function, reduceQuantity: Function, removeFromCart: Function}) {
     console.log(cart[0])
   const LatestOrders = [
     {
@@ -59,12 +59,16 @@ export default function CartItemCard({cart, addToCart, removeFromCart}: {cart: A
       quantity: 2,
     },
   ];
+
+  // const reduceItems = () => {
+
+  // }
   return (
     <div className="shadow py-4 rounded-md w-fit space-y-3">
       <div className="flex px-3 justify-between items-center">
         <p className="text-lg font-bold">Food Items</p>
       </div>
-      <div className="md:w-[410px]">
+      <div className="md:w-[420px]">
         {
           cart && cart.length !== 0 ? 
           cart.map((foodItem, id, arr) => (
@@ -89,11 +93,11 @@ export default function CartItemCard({cart, addToCart, removeFromCart}: {cart: A
                     <p className="text-[#999999] text-sm">{foodItem.description}</p>
                 </div>
                 <div className="flex gap-4 mt-4">
-                    <button className="w-fit h-fit text-2xl text-custom-yellow hover:text-light-custom-yellow">
+                    <button onClick={()=>{IncreaseItemInCart(foodItem.id)}} className="w-fit h-fit text-2xl text-custom-yellow hover:text-light-custom-yellow">
                         <AiFillPlusCircle className=" " />
                     </button>
                     <p className=" font-semibold">{foodItem.quantity}</p>
-                    <button className="w-fit h-fit text-2xl text-custom-yellow hover:text-light-custom-yellow" >
+                    <button onClick={()=>{reduceQuantity(foodItem.id)}} className="w-fit h-fit text-2xl text-custom-yellow hover:text-light-custom-yellow" >
                         <AiFillMinusCircle />
                     </button>
                 </div>
@@ -101,7 +105,7 @@ export default function CartItemCard({cart, addToCart, removeFromCart}: {cart: A
             </div>
             <div className="w-fit space-y-1.5 ">
               <div className="w-full text-right flex justify-end">
-                <RiDeleteBin6Fill className="text-xl w-fit text-right text-black cursor-pointer text-custom-yellow hover:text-red-600" />
+                <RiDeleteBin6Fill onClick={()=>{removeFromCart(foodItem.id)}} className="text-xl w-fit text-right cursor-pointer text-custom-yellow hover:text-red-600" />
               </div>
             </div>
           </div>

@@ -10,10 +10,10 @@ import UserInfoCard from "~/components/UserInfoCard";
 import NavBar from "~/components/UsersNavbar";
 
 export default function Cart() {
-    const { cart, addToCart, removeFromCart } = useContext(CartContext);
+    const { cart, IncreaseItemInCart, removeFromCart, reduceQuantity, getTotalCost, getTotalItems } = useContext(CartContext);
   return (
     <main className="w-full relative scroll-smooth">
-      <NavBar cart={cart} />
+      <NavBar cart={cart} getTotalItems={getTotalItems} />
       <section className="min-h-screen py-10 bg-slate-100" id="menu">
         <div className="w-11/12 mx-auto space-y-6">
             <div className=" space-y-2 mt-20">
@@ -25,8 +25,8 @@ export default function Cart() {
                 </p>
             </div>
             <div className="gap-6 w-fit mx-auto flex flex-col-reverse md:flex-row">
-                <CartItemCard cart={cart} addToCart={addToCart} removeFromCart={removeFromCart} />
-                <UserInfoCard cart={cart} />
+                <CartItemCard cart={cart} IncreaseItemInCart={IncreaseItemInCart} removeFromCart={removeFromCart} reduceQuantity={reduceQuantity} />
+                <UserInfoCard cart={cart} getTotalCost={getTotalCost} getTotalItems={getTotalItems} />
             </div>
         </div>
       </section>
