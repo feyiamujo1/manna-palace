@@ -36,6 +36,9 @@ export default function EditFoodItemDialog({showDialog, setShowDialog, selectedI
         console.log(ImageRef.current)
     })
     
+    const handleSubmit = () =>{
+        
+    }
     
     return(
         <Dialog open={showDialog}>
@@ -46,7 +49,7 @@ export default function EditFoodItemDialog({showDialog, setShowDialog, selectedI
                 </div>
                 <hr />
                 {/* onSubmit={handleSubmit}  {selectedHoldings >= 0 && selectedHoldings != null ? "Edit Holdings" : "New Holding"} */}
-                <form  className=" py-4 pt-0 space-y-4 box-border">
+                <form onSubmit={handleSubmit} className=" py-4 pt-0 space-y-4 box-border">
                     <div className="space-y-4 box-border">
                         <div className=" w-full flex flex-col gap-2 box-border">
                             <label className="text-sm font-medium" htmlFor="name">Name</label>

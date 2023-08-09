@@ -59,7 +59,7 @@ export default function SideBar({
           className={cn(
             "flex cursor-pointer items-center gap-2 rounded-md px-2 py-1.5 text-base font-semibold ",
             currentRoute.includes(route.path) &&
-              "bg-custom-yellow text-white hover:bg-custom-yellow",
+              "bg-custom-yellow text-white hover:bg-light-custom-yellow",
             currentRoute !== route.path &&
               "bg-[#f9fafb] text-black hover:bg-custom-yellow hover:text-white"
           )}

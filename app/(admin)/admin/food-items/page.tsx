@@ -213,9 +213,9 @@ export default function FoodCategoryPage() {
           <p className=" py-1.5 px-3 rounded-md bg-custom-yellow text-white font-bold text-center">
             Total: {FoodList?.length}
           </p>
-          <p onClick={()=>setShowDialog(true)} className=" py-1.5 px-3 rounded-md bg-custom-yellow text-white font-bold text-center">
+          <button onClick={()=>setShowDialog(true)} className=" py-1.5 px-3 rounded-md bg-custom-yellow hover:bg-light-custom-yellow text-white font-bold text-center cursor-pointer">
             Add Item
-          </p>
+          </button>
         </div>
       </div>
       <hr />

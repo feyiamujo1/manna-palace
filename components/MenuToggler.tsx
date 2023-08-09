@@ -27,9 +27,9 @@ export default function MenuToggler({ selectedCategory, setSelectedCategory }: P
           }}
           className={cn(
             "py-2 px-3 rounded-lg cursor-pointer transition duration-300",
-            selectedCategory === category.name && "bg-custom-yellow text-white",
+            selectedCategory === category.name && "bg-custom-yellow hover:bg-light-custom-yellow text-white",
             selectedCategory !== category.name &&
-              "bg-[#152a3b] hover:bg-custom-yellow hover:text-white "
+              "bg-[#152a3b] hover:bg-light-custom-yellow hover:text-white"
           )}
         >
           {category.name}
