@@ -34,20 +34,19 @@ export default function LoginForm() {
     setError("");
     
     try {
-      const res = await signIn("sanity-login", {
-        redirect: false,
-        email: value.email,
-        password: value.password,
-      });
+      const response = await fetch("/api/auth/login", {
+        method: "POST",
+        body: JSON.stringify({ email: value.email, password: value.password }),
+      })
 
-      if (res?.error) {
+      if (!response.ok) {
         setError("Invalid email or password.");
         return;
       }
 
       router.push("/");
     } catch (error) {
-      setError("Something went wrong. Please try again later.");
+      setError("Something went wrong. Please try again later");
     } finally {
       setLoading(false);
     }
@@ -101,8 +100,7 @@ export default function LoginForm() {
             disabled={loading}
             type="submit"
           >
-            {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-            Login
+            {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : "Login"}
           </Button>
         </div>
       </form>

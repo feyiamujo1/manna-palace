@@ -38,9 +38,6 @@ export default function SignupForm() {
       const newUser = await (
         await fetch("/api/auth/signup", {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
           body: JSON.stringify(value),
         })
       ).json();
@@ -53,20 +50,19 @@ export default function SignupForm() {
         return;
       }
 
-      // const res = await signIn("sanity-login", {
-      //   redirect: false,
-      //   email: value.email,
-      //   password: value.password,
-      // });
+      const response = await fetch("/api/auth/login", {
+        method: "POST",
+        body: JSON.stringify({ email: value.email, password: value.password }),
+      });
 
-      // if (res?.error) {
-      //   throw new Error(res.error);
-      // }
+      if (!response.ok) {
+        throw new Error("Something went wrong. Please try again later");
+      }
 
-      // router.push("/");
+      router.push("/");
       console.log("created successfully");
     } catch (error) {
-      setServerError("Something went wrong. Please try again later.");
+      setServerError("Something went wrong. Please try again later");
     } finally {
       setLoading(false);
     }
@@ -74,7 +70,11 @@ export default function SignupForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} method="post" className="space-y-3">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        method="post"
+        className="space-y-3"
+      >
         <FormField
           control={form.control}
           name="fullname"
@@ -163,7 +163,11 @@ export default function SignupForm() {
             disabled={loading}
             type="submit"
           >
-            {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : "Register"}
+            {loading ? (
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            ) : (
+              "Register"
+            )}
           </Button>
         </div>
       </form>

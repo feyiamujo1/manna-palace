@@ -1,9 +1,7 @@
 import bcryptjs from "bcryptjs";
-import mongoose from "mongoose";
 import { NextResponse } from "next/server";
 import { connectToMongoDB } from "~/lib/mongodb";
 import User from "~/models/UserModel";
-import { IUser } from "~/types/User";
 
 export async function POST(request: Request) {
   try {
@@ -11,11 +9,12 @@ export async function POST(request: Request) {
       NextResponse.json({ error: err }, { status: 500 })
     );
 
-    // get the request
+    // get the request & Check if it is an empty resquest being sent
     const reqBody = await request.json();
-    // Check if it is an empty resquest being sent
-    if (!reqBody)
+
+    if (!reqBody){
       return NextResponse.json({ error: "Data is missing" }, { status: 400 });
+    }
 
     // Extract all info
     const { fullname, email, password, phoneNumber } = reqBody;
@@ -36,35 +35,16 @@ export async function POST(request: Request) {
       const salt = await bcryptjs.genSalt(10);
       const hashedPassword = await bcryptjs.hash(password, salt);
 
-      User.create(
-        {
-          fullname,
-          email,
-          phoneNumber,
-          password: hashedPassword,
-        },
-        (error: unknown, data: IUser) => {
-          if (error && error instanceof mongoose.Error.ValidationError) {
-            // The mongodb database will return an array
-            // but we only need to show one error at a time
+      const newUser = await User.create({
+        fullname,
+        email,
+        phoneNumber,
+        password: hashedPassword,
+      });
 
-            for (let field in error.errors) {
-              const msg = error.errors[field].message;
-              return NextResponse.json({ error: msg }, { status: 409 });
-            }
-          }
-          const user = {
-            email: data.email,
-            fullname: data.fullname,
-            phoneNumber: data.phoneNumber,
-            _id: data._id,
-            role: data.role,
-          };
-          return NextResponse.json(
-            { success: true, user: user },
-            { status: 201 }
-          );
-        }
+      return NextResponse.json(
+        { success: true, user: newUser },
+        { status: 201 }
       );
     }
   } catch (error: any) {

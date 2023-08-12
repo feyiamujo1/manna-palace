@@ -1,9 +1,9 @@
 import bcryptjs from "bcryptjs";
-import mongoose from "mongoose";
 import { NextResponse } from "next/server";
 import { connectToMongoDB } from "~/lib/mongodb";
 import User from "~/models/UserModel";
-import { IUser } from "~/types/User";
+// const jwt = require('jsonwebtoken');
+import jwt from "jsonwebtoken";
 
 export async function POST(request: Request) {
   try {
@@ -11,62 +11,52 @@ export async function POST(request: Request) {
       NextResponse.json({ error: err }, { status: 500 })
     );
 
-    // get the request
+    // get the request & Check if it is an empty resquest being sent
     const reqBody = await request.json();
-    // Check if it is an empty resquest being sent
-    if (!reqBody)
+
+    if (!reqBody){
       return NextResponse.json({ error: "Data is missing" }, { status: 400 });
+    }
 
     // Extract all info
-    const { fullname, email, password, phoneNumber } = reqBody;
+    const {email, password} = reqBody;
 
     // Check if the user exists
     const userExists = await User.findOne({ email });
 
-    if (userExists) {
-      // If user already exists then send this error
-      return NextResponse.json(
-        { error: "User already exists" },
-        { status: 400 }
-      );
-    } else {
-      // Hash the password first here before storing it
-      // const hashedPassword = await hash(password, 12);
-
-      const salt = await bcryptjs.genSalt(10);
-      const hashedPassword = await bcryptjs.hash(password, salt);
-
-      User.create(
-        {
-          fullname,
-          email,
-          phoneNumber,
-          password: hashedPassword,
-        },
-        (error: unknown, data: IUser) => {
-          if (error && error instanceof mongoose.Error.ValidationError) {
-            // The mongodb database will return an array
-            // but we only need to show one error at a time
-
-            for (let field in error.errors) {
-              const msg = error.errors[field].message;
-              return NextResponse.json({ error: msg }, { status: 409 });
-            }
-          }
-          const user = {
-            email: data.email,
-            fullname: data.fullname,
-            phoneNumber: data.phoneNumber,
-            _id: data._id,
-            role: data.role,
-          };
-          return NextResponse.json(
-            { success: true, user: user },
-            { status: 201 }
-          );
-        }
-      );
+    // If the user does not exist then show this errors
+    if (!userExists){
+      return NextResponse.json({ error: "User does not exist" }, { status: 400 });
     }
+  
+    // If user already exists then check if password is correct
+    
+    // Hash the password first here before storing it
+    // const hashedPassword = await hash(password, 12);
+    const validPassword = await bcryptjs.compare(password, userExists.password);
+
+    if (!validPassword){
+      return NextResponse.json({error: "Invalid password"}, { status: 400 });
+    }else{
+      // Create token data
+      const tokenData = {
+        _id: userExists._id,
+        email: userExists.email,
+        fullname: userExists.fullname,
+        phoneNumber: userExists.phoneNumber,
+        role: userExists.role,
+      };
+
+      // Create token
+      const token = await jwt.sign(tokenData, process.env.JWT_SECRET_KEY!, {expiresIn: "4h"});
+
+      const response = NextResponse.json({message: "Login successful", success: true});
+
+      response.cookies.set("token", token, {httpOnly: true});
+
+      return response;
+    }
+
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
