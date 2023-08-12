@@ -20,6 +20,7 @@ import {
   FormMessage,
 } from "./ui/form";
 import { Input } from "./ui/input";
+import axios from "axios";
 
 export default function SignupForm() {
   const [loading, setLoading] = useState(false);
@@ -35,7 +36,7 @@ export default function SignupForm() {
 
     try {
       const newUser = await (
-        await fetch("/api/sanity/signUp", {
+        await fetch("/api/auth/signup", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -52,17 +53,18 @@ export default function SignupForm() {
         return;
       }
 
-      const res = await signIn("sanity-login", {
-        redirect: false,
-        email: value.email,
-        password: value.password,
-      });
+      // const res = await signIn("sanity-login", {
+      //   redirect: false,
+      //   email: value.email,
+      //   password: value.password,
+      // });
 
-      if (res?.error) {
-        throw new Error(res.error);
-      }
+      // if (res?.error) {
+      //   throw new Error(res.error);
+      // }
 
-      router.push("/");
+      // router.push("/");
+      console.log("created successfully");
     } catch (error) {
       setServerError("Something went wrong. Please try again later.");
     } finally {
@@ -75,7 +77,7 @@ export default function SignupForm() {
       <form onSubmit={form.handleSubmit(onSubmit)} method="post" className="space-y-3">
         <FormField
           control={form.control}
-          name="name"
+          name="fullname"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Full Name</FormLabel>
@@ -111,7 +113,7 @@ export default function SignupForm() {
         />
         <FormField
           control={form.control}
-          name="phone"
+          name="phoneNumber"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Phone Number</FormLabel>
@@ -161,8 +163,7 @@ export default function SignupForm() {
             disabled={loading}
             type="submit"
           >
-            {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-            Register
+            {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : "Register"}
           </Button>
         </div>
       </form>

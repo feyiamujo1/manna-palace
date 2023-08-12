@@ -26,8 +26,8 @@ import Fanta from "~/public/stock-photo-zaporizhzhia-ukraine-june-row-of-fanta-b
 import Sprite from "~/public/stock-photo-stuttgart-germany-august-sprite-lemonade-soft-drink-in-a-plastic-bottle-on-ice-cubes-2041135454.jpg";
 import { useContext, useState } from "react";
 import CustomerFoodCard from "~/components/CustomerFoodCard";
-import { CartContext } from "~/api/CartContext";
 import NavBar from "~/components/UsersNavbar";
+import { CartContext } from "~/app/context/CartContext";
 
 export default function Menu() {
   const FoodList = [

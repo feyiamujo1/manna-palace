@@ -40,7 +40,7 @@ export default function SideBar({
   setIsOpen: Function;
 }) {
   const currentRoute = usePathname();
-  console.log(currentRoute)
+  // console.log(currentRoute)
 
   return (
     <div

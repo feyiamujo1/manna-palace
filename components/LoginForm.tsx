@@ -32,7 +32,7 @@ export default function LoginForm() {
   const onSubmit = async (value: z.infer<typeof LoginFormSchema>) => {
     setLoading(true);
     setError("");
-
+    
     try {
       const res = await signIn("sanity-login", {
         redirect: false,

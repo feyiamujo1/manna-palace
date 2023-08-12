@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useContext } from "react";
 import { GiShoppingBag } from "react-icons/gi";
-import { CartContext } from "~/api/CartContext";
+import { CartContext } from "~/app/context/CartContext";
 import CartItemCard from "~/components/CartItemCard";
 import UserInfoCard from "~/components/UserInfoCard";
 import NavBar from "~/components/UsersNavbar";
