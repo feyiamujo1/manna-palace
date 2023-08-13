@@ -34,6 +34,7 @@ export default function LoginForm() {
     setError("");
     
     try {
+      console.log(value.email, value.password);
       const response = await fetch("/api/auth/login", {
         method: "POST",
         body: JSON.stringify({ email: value.email, password: value.password }),

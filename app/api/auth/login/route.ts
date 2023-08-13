@@ -22,17 +22,19 @@ export async function POST(request: Request) {
     const {email, password} = reqBody;
 
     // Check if the user exists
-    const userExists = await User.findOne({ email });
+    const userExists = await User.findOne({ email }).select("+password");
+
+    console.log("This user exists is ", userExists);
 
     // If the user does not exist then show this errors
     if (!userExists){
       return NextResponse.json({ error: "User does not exist" }, { status: 400 });
     }
-  
     // If user already exists then check if password is correct
     
     // Hash the password first here before storing it
     // const hashedPassword = await hash(password, 12);
+    
     const validPassword = await bcryptjs.compare(password, userExists.password);
 
     if (!validPassword){

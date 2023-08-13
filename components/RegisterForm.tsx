@@ -43,7 +43,7 @@ export default function SignupForm() {
       ).json();
 
       if (newUser?.error) {
-        form.setError("email", {
+        form.setError("password", {
           type: "custom",
           message: newUser.error,
         });

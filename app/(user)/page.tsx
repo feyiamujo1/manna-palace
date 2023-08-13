@@ -5,7 +5,6 @@ import Lottie from "lottie-react";
 import anime from "~/assets/food-choose.json";
 
 export default function Home() {
-  
   return (
     <main className="w-full relative scroll-smooth bg-[#faf9f5]">
       <nav className="absolute top-0 left-0 right-0 w-full py-2 shadow-sm">
@@ -45,7 +44,7 @@ export default function Home() {
           </div>
           <div className="w-full ">
             <div className="w-[500px] mx-auto mt-10">
-              <Lottie animationData={anime} loop={true} />;
+              <Lottie animationData={anime} loop={true} />
             </div>
           </div>
         </div>
