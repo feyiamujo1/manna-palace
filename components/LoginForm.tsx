@@ -45,7 +45,7 @@ export default function LoginForm() {
         return;
       }
 
-      router.push("/");
+      router.push("/menu");
     } catch (error) {
       setError("Something went wrong. Please try again later");
     } finally {

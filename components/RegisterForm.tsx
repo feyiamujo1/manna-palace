@@ -59,7 +59,7 @@ export default function SignupForm() {
         throw new Error("Something went wrong. Please try again later");
       }
 
-      router.push("/");
+      router.push("/menu");
       console.log("created successfully");
     } catch (error) {
       setServerError("Something went wrong. Please try again later");
