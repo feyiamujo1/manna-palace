@@ -20,6 +20,7 @@ import {
   FormMessage,
 } from "./ui/form";
 import { Input } from "./ui/input";
+import { getServerSession } from "next-auth";
 
 export default function LoginForm() {
   const [loading, setLoading] = useState(false);
@@ -35,15 +36,18 @@ export default function LoginForm() {
     
     try {
       console.log(value.email, value.password);
-      const response = await fetch("/api/auth/login", {
-        method: "POST",
-        body: JSON.stringify({ email: value.email, password: value.password }),
+      const response = await signIn("credentials", {
+        redirect: false,
+        email: value.email, 
+        password: value.password,
       })
 
-      if (!response.ok) {
+      if (response?.error) {
         setError("Invalid email or password.");
         return;
       }
+
+      console.log(response);
 
       router.push("/menu");
     } catch (error) {
