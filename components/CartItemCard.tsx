@@ -64,11 +64,11 @@ export default function CartItemCard({cart, reduceQuantity, removeFromCart, Incr
 
   // }
   return (
-    <div className="shadow py-4 rounded-md w-fit space-y-3">
+    <div className={cn("shadow-md pt-4 rounded-md w-fit h-fit space-y-3", cart.length > 0 ? "pb-2" : "h-fit py-4")}>
       <div className="flex px-3 justify-between items-center">
         <p className="text-lg font-bold">Food Items</p>
       </div>
-      <div className="md:w-[420px]">
+      <div className="w-full md:w-[420px]">
         {
           cart && cart.length !== 0 ? 
           cart.map((foodItem, id, arr) => (
@@ -110,7 +110,7 @@ export default function CartItemCard({cart, reduceQuantity, removeFromCart, Incr
             </div>
           </div>
         ))
-        : <p className="text-[#999999] p-3 border-t border-[#e5e7eb]">Your cart is empty</p>
+        : <p className="text-[#999999] w-full md:w-[420px] p-3 border-t border-[#e5e7eb]">Your cart is empty</p>
         }
       </div>
     </div>

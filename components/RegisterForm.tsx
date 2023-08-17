@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
@@ -21,6 +21,7 @@ import {
 } from "./ui/form";
 import { Input } from "./ui/input";
 import axios from "axios";
+import { getToken } from "next-auth/jwt";
 
 export default function SignupForm() {
   const [loading, setLoading] = useState(false);
@@ -50,13 +51,22 @@ export default function SignupForm() {
         return;
       }
 
-      const response = await fetch("/api/auth/login", {
-        method: "POST",
-        body: JSON.stringify({ email: value.email, password: value.password }),
-      });
+      const response = await signIn("credentials", {
+        redirect: false,
+        email: value.email, 
+        password: value.password,
+      })
 
-      if (!response.ok) {
-        throw new Error("Something went wrong. Please try again later");
+      if (response?.error) {
+        setServerError("Invalid email or password.");
+        return;
+      }else{
+        const {data: session} = useSession();
+        if (session?.user?.fullName === "admin"){
+          router.push("/admin");
+        }else{
+          router.push("/menu");
+        }
       }
 
       router.push("/menu");

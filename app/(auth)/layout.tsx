@@ -14,7 +14,7 @@ export default async function AuthLayout({
 }) {
 
   return (
-    <div className=" m-0 w-full p-0 bg-[#faf9f5] overflow-hidden scroll-smooth">
+    <div className=" m-0 w-full p-0 overflow-hidden scroll-smooth">
         <nav className='absolute z-50 top-0 left-0 right-0 w-full bg-none py-2 shadow-sm bg-white '>
           <div className='w-11/12 mx-auto flex justify-between items-center'>
             <Link href="/">

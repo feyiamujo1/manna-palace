@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
@@ -20,7 +20,6 @@ import {
   FormMessage,
 } from "./ui/form";
 import { Input } from "./ui/input";
-import { getServerSession } from "next-auth";
 
 export default function LoginForm() {
   const [loading, setLoading] = useState(false);
@@ -42,13 +41,21 @@ export default function LoginForm() {
         password: value.password,
       })
 
+      console.log(response);
+
       if (response?.error) {
         setError("Invalid email or password.");
         return;
+      }else{
+        const {data: session} = useSession();
+        if (session?.user?.fullName === "admin"){
+          router.push("/admin");
+        }else{
+          router.push("/menu");
+        }
       }
 
       console.log(response);
-
       router.push("/menu");
     } catch (error) {
       setError("Something went wrong. Please try again later");

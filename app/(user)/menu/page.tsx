@@ -205,7 +205,7 @@ export default function Menu() {
   const { cart, addToCart, getTotalItems } = useContext(CartContext);
 
   return (
-    <main className="w-full relative scroll-smooth bg-[#faf9f5]">
+    <main className="w-full relative scroll-smooth">
       <NavBar cart={cart} getTotalItems={getTotalItems} />
       <section className="min-h-screen py-10 bg-slate-100" id="menu">
         <div className="w-11/12 mx-auto space-y-6">

@@ -1,5 +1,7 @@
+"use client"
 import './globals.css'
 import { Raleway } from 'next/font/google'
+import { SessionProvider } from "next-auth/react"
 
 const raleway = Raleway({ subsets: ['latin'] })
 
@@ -10,8 +12,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      
-      <body className={raleway.className}>{children}</body>
+      <body className={raleway.className}>
+        <SessionProvider>{children}</SessionProvider>
+      </body>
     </html>
   )
 }

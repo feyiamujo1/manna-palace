@@ -6,7 +6,7 @@ import anime from "~/assets/food-choose.json";
 
 export default function Home() {
   return (
-    <main className="w-full relative scroll-smooth bg-[#faf9f5]">
+    <main className="w-full relative scroll-smooth">
       <nav className="absolute top-0 left-0 right-0 w-full py-2 shadow-sm">
         <div className="w-11/12 mx-auto flex justify-between items-center">
           <Link href="/">

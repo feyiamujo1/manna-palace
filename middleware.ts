@@ -1,45 +1,39 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import jwt from "jsonwebtoken";
+import { getToken } from "next-auth/jwt";
+// import { useRouter } from "next/router"
 
-// This function can be marked `async` if using `await` inside
-export function middleware(request: NextRequest) {
-    //   return NextResponse.redirect(new URL("/login", request.url));
-    const path = request.nextUrl.pathname
+export async function middleware(request: NextRequest) {
+    const path = request.nextUrl.pathname;
 
-    // All the auth paths
-    const isAuthPath = path === "/login" || path === "/register" || path === "/forgot-password"
+    const AuthorizationPaths = path === "/login" || path === "/register" || path === "/forgot-password"
     || path === "/password-creation" || path === "/password-reset-confirmation";
 
-    const accessFreePath = path === "/" || path === "/menu";
+    const freeAccessPaths = path === "/" || path === "/menu";
 
-    // // Check if the token exists that means the user as signed up
-    const token = request.cookies.get("token")?.value || "";
+    const AdminPaths = path === "/admin/:path*"
 
-    // console.log(token);
+    const token : any = await getToken({req: request}) || "";
+    // console.log("token is", token);
 
-    // const decodedToken: any = jwt.verify(token, process.env.JWT_SECRET_KEY!);
-
-    // const userRole = decodedToken.role;
-
-    // This checks if it is a auth page the user wants to go to if the user logged in it 
-    // it directs the user back to the menu so they cant go to the authentication page again
-    if (isAuthPath && token){
-        // if (userRole && userRole === "admin"){
-            // return NextResponse.redirect(new URL("/admin", request.nextUrl));
-        // }else{
+    if (AuthorizationPaths && token){
+        if (token?.user?.role === "admin"){
+            return NextResponse.redirect(new URL("/admin", request.nextUrl));
+        }else{
+            // console.log(router.back())
             return NextResponse.redirect(new URL("/menu", request.nextUrl));
-        // }
+        }
     }
 
-    // If the user isn't logged in and wants to go to the main pages then they are 
-    // redirected to login page
-    if (!accessFreePath && !isAuthPath && !token){
+    if (token?.user?.role === "user" && path.includes("/admin")){
+        return NextResponse.redirect(new URL("/page-not-found", request.nextUrl));
+    }
+
+    if (!freeAccessPaths && !AuthorizationPaths && !token){
         return NextResponse.redirect(new URL("/login", request.nextUrl));
     }
 }
 
-// See "Matching Paths" below to learn more
 export const config = {
   matcher: [
     "/",

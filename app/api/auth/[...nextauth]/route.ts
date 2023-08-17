@@ -3,6 +3,7 @@ import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { connectToMongoDB } from "~/lib/mongodb";
 import User from "~/models/UserModel";
+import { IUser } from "~/types/IUser";
 
 const authOptions: NextAuthOptions = {
   providers: [
@@ -36,7 +37,7 @@ const authOptions: NextAuthOptions = {
         const user = {
             id: ExistingUser._id,
             email: ExistingUser.email,
-            fullname: ExistingUser.fullname,
+            fullName: ExistingUser.fullname,
             phoneNumber: ExistingUser.phoneNumber,
             role: ExistingUser.role,
         };
@@ -52,15 +53,23 @@ const authOptions: NextAuthOptions = {
   },
   callbacks: {
     jwt: async ({token, user}: any)=>{
-        if (user){
-            token.user = user
+        if(user){
+            token.user = {
+              id: user.id,
+              email: user.email,
+              fullName: user.fullname,
+              phoneNumber: user.phoneNumber,
+              role: user.role,
+          };
         }
         return token
     },
-    session: async({session, token})=>{
+    session: async({session, token}: any)=>{
+      if (token && session.user){
         const user = token.user;
-        session.user = user as any;
-        return session
+        session.user = user;
+      }
+      return session
     }
   },
   secret: process.env.NEXTAUTH_SECRET,
